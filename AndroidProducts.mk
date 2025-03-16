@@ -1,13 +1,14 @@
 #
-# Copyright (C) 2024 The LineageOS Project
+# Copyright (C) 2025 The Android Open Source Project
+# Copyright (C) 2025 SebaUbuntu's TWRP device tree generator
 #
 # SPDX-License-Identifier: Apache-2.0
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/lineage_qssi.mk
+    $(LOCAL_DIR)/twrp_darwin.mk
 
 COMMON_LUNCH_CHOICES := \
-    lineage_qssi-user \
-    lineage_qssi-userdebug \
-    lineage_qssi-eng
+    twrp_darwin-user \
+    twrp_darwin-userdebug \
+    twrp_darwin-eng

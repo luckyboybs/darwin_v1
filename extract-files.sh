@@ -8,8 +8,8 @@
 
 set -e
 
-DEVICE=qssi
-VENDOR=qualcomm
+DEVICE=darwin
+VENDOR=deltainno
 
 # Load extract_utils and do some sanity checks
 MY_DIR="${BASH_SOURCE%/*}"

@@ -1,103 +1,79 @@
 #
-# Copyright (C) 2024 The LineageOS Project
+# Copyright (C) 2025 The Android Open Source Project
+# Copyright (C) 2025 SebaUbuntu's TWRP device tree generator
 #
 # SPDX-License-Identifier: Apache-2.0
 #
 
+LOCAL_PATH := device/deltainno/darwin
+
+
+
+
 # A/B
-PRODUCT_PACKAGES += \
-    android.hardware.boot@1.2-impl \
-    android.hardware.boot@1.2-impl.recovery \
-    android.hardware.boot@1.2-service
-
-PRODUCT_PACKAGES += \
-    update_engine \
-    update_engine_sideload \
-    update_verifier
-
 AB_OTA_POSTINSTALL_CONFIG += \
     RUN_POSTINSTALL_system=true \
     POSTINSTALL_PATH_system=system/bin/otapreopt_script \
     FILESYSTEM_TYPE_system=ext4 \
     POSTINSTALL_OPTIONAL_system=true
 
-AB_OTA_POSTINSTALL_CONFIG += \
-    RUN_POSTINSTALL_vendor=true \
-    POSTINSTALL_PATH_vendor=bin/checkpoint_gc \
-    FILESYSTEM_TYPE_vendor=ext4 \
-    POSTINSTALL_OPTIONAL_vendor=true
+# Boot control HAL
+PRODUCT_PACKAGES += \
+    android.hardware.boot@1.0-impl \
+    android.hardware.boot@1.0-service
 
 PRODUCT_PACKAGES += \
-    checkpoint_gc \
-    otapreopt_script
+    bootctrl.kona
 
-# API levels
-PRODUCT_SHIPPING_API_LEVEL := 29
+PRODUCT_STATIC_BOOT_CONTROL_HAL := \
+    bootctrl.kona \
+    libgptutils \
+    libz \
+    libcutils
 
-# fastbootd
 PRODUCT_PACKAGES += \
-    android.hardware.fastboot@1.1-impl-mock \
-    fastbootd
+    otapreopt_script \
+    cppreopts.sh \
+    update_engine \
+    update_verifier \
+    update_engine_sideload
 
-# Health
-PRODUCT_PACKAGES += \
-    android.hardware.health@2.1-impl \
-    android.hardware.health@2.1-service
-
-# Overlays
-PRODUCT_ENFORCE_RRO_TARGETS := *
-
-# Partitions
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
-# Product characteristics
-PRODUCT_CHARACTERISTICS := nosdcard
-
-# Rootdir
-PRODUCT_PACKAGES += \
-    bytedanceswap.sh \
-    bytedanceswap_free_report.sh \
-    bytedanceswap_init.sh \
-    bytedanceswap_report.sh \
-    bytedanceswap_report_off.sh \
-    init.class_main.sh \
-    init.crda.sh \
-    init.customize.config.sh \
-    init.customize.test.sh \
-    init.mdm.sh \
-    init.preinstall.sh \
-    init.qcom.class_core.sh \
-    init.qcom.coex.sh \
-    init.qcom.early_boot.sh \
-    init.qcom.efs.sync.sh \
-    init.qcom.post_boot.sh \
-    init.qcom.propset_bdaddr.sh \
-    init.qcom.sdio.sh \
-    init.qcom.sensors.sh \
-    init.qcom.sh \
-    init.qcom.usb.sh \
-    init.qti.chg_policy.sh \
-    init.qti.dcvs.sh \
-    init.qti.media.sh \
-    init.qti.qcv.sh \
-    qca6234-service.sh \
+PRODUCT_SHIPPING_API_LEVEL := 30
 
 PRODUCT_PACKAGES += \
-    fstab.qcom \
-    init.qcom.factory.rc \
-    init.qcom.rc \
-    init.qcom.usb.rc \
-    init.qti.ufs.rc \
-    init.target.rc \
-    init.target.wigig.rc \
-    init.recovery.qcom.rc \
+    android.hardware.fastboot@1.0-impl-mock \
+    fastbootd
 
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/rootdir/etc/fstab.qcom:$(TARGET_COPY_OUT_RAMDISK)/fstab.qcom
+TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
+# TWRP specific build flags
+TW_THEME := portrait_hdpi
+RECOVERY_SDCARD_ON_DATA := true
+TW_EXCLUDE_DEFAULT_USB_INIT := true
+TW_EXTRA_LANGUAGES := true
+TW_INCLUDE_NTFS_3G := true
+TW_USE_TOOLBOX := true
+TW_INCLUDE_RESETPROP := true
+TW_INPUT_BLACKLIST := "hbtp_vm"
+TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel0-backlight/brightness"
+TW_DEFAULT_BRIGHTNESS := 1200
+TARGET_USES_MKE2FS := true
+TW_NO_LEGACY_PROPS := true
+TW_USE_NEW_MINADBD := true
+TW_NO_BIND_SYSTEM := true
+TW_NO_SCREEN_BLANK := true
+TW_EXCLUDE_APEX := true
+TW_FRAMERATE := 60
 
-# Soong namespaces
-PRODUCT_SOONG_NAMESPACES += \
-    $(LOCAL_PATH)
+TARGET_OTA_ASSERT_DEVICE := m01q
 
-# Inherit the proprietary files
-$(call inherit-product, vendor/qualcomm/qssi/qssi-vendor.mk)
+TARGET_COPY_OUT_VENDOR := vendor
+
+TW_DEVICE_VERSION := smiley
+
+TW_Y_OFFSET := 70
+TW_H_OFFSET := -70
+
+TWRP_INCLUDE_LOGCAT := true[/HEADING]
+[HEADING=2]TARGET_USES_LOGD := true​
