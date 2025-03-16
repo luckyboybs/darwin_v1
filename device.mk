@@ -25,11 +25,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     bootctrl.kona
 
-PRODUCT_STATIC_BOOT_CONTROL_HAL := \
-    bootctrl.kona \
-    libgptutils \
-    libz \
-    libcutils
+
+PRODUCT_PACKAGES += \
+    bootctrl.smartisan_sm8250.recovery \
+    android.hardware.boot@1.1-impl-qti.recovery
 
 PRODUCT_PACKAGES += \
     otapreopt_script \
